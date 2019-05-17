@@ -1,5 +1,16 @@
 # energy-blockchain
 Green Energy Blockchain Project cooperate with NCKU-EE
 
-## Hello World
-test by cswang
+## [Hello World](/helloworld.py)
+Return Hello World Message
+
+### Usage
+`curl http://localhost:5000/helloworld/`
+
+### Response
+200
+```
+{
+  "message": "Hello World!"
+}
+```
