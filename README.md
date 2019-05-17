@@ -9,7 +9,7 @@ Return Hello World Message
 
 ### Response
 200
-```
+```json
 {
   "message": "Hello World!"
 }
