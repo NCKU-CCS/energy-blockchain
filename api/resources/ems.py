@@ -2,7 +2,7 @@ from flask_restful import Resource
 from flask import request
 import models.schema.bems as bems_schema
 import models.schema.hems as hems_schema
-from resources import app
+from config import app
 
 class Hems (Resource):
     def post(self, name):

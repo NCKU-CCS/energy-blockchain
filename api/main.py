@@ -1,7 +1,7 @@
 from flask import Flask
 from flask_restful import Api
 from resources import ems
-from resources import app
+from config import app
 
 # app = Flask(__name__)
 # app.config.from_pyfile('config.py')
