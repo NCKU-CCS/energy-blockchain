@@ -3,7 +3,7 @@ from marshmallow import validate
 
 
 # HEMS
-class aggregator_distribution_schema(ma.Schema):
+class aggregator_distribution(ma.Schema):
     id = ma.Int(required=True)
     field = ma.Str(required=True)
     address = ma.Str(required=True)

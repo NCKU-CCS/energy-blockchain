@@ -14,6 +14,6 @@ curl
 
 `curl http://localhost:5000/{ems}/{type} -X POST --data @{json_file}`
 
-Example for Sending aggregator_distribution data
+Example for Sending appliances data
 
-`curl http://localhost:5000/hems/aggregator_distribution -X POST --data @aggregator_distribution.json`
+`curl http://localhost:5000/bems/appliances -X POST --data @bems_appliances.json`
