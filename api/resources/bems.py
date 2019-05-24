@@ -9,10 +9,10 @@ class Bems (Resource):
             return {
                 'message': 'Type Not Included!'
             }, 403
+        
         # choose Schema
         target_schema = getattr(bems, name)
         type_schema = target_schema(many=False)
-        # type_schema = hems_schema.aggregator_distribution(many=False)
 
         result = type_schema.load(request.get_json(force='true'))
 

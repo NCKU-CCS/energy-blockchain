@@ -13,7 +13,6 @@ class Hems (Resource):
         # choose Schema
         target_schema = getattr(hems, name)
         type_schema = target_schema(many=False)
-        # type_schema = hems_schema.aggregator_distribution(many=False)
 
         result = type_schema.load(request.get_json(force='true'))
 
