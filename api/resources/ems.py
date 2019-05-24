@@ -1,18 +1,16 @@
 from flask_restful import Resource
 from flask import request
-import models.schema.ems as schema
-# from models.ems import UserModel
-
-HEMS_ACCEPT = ['aggregator_distribution']
-BEMS_ACCEPT = ['appliances']
+import models.schema.bems as bems_schema
+import models.schema.hems as hems_schema
+from resources import app
 
 class Hems (Resource):
     def post(self, name):
-        if name not in HEMS_ACCEPT:
+        if name not in app.config['HEMS_ACCEPT']:
             return {
                 'message': 'Type Not Included!'
             }, 403
-        type_schema = schema.aggregator_distribution(many=False)
+        type_schema = hems_schema.aggregator_distribution(many=False)
         result = type_schema.load(request.get_json(force='true'))
 
         if len(result.errors) > 0:
@@ -25,16 +23,16 @@ class Hems (Resource):
 # 拆掉
 class Bems (Resource):
     def post(self, name):
-        if name not in BEMS_ACCEPT:
+        if name not in app.config['BEMS_ACCEPT']:
             return {
                 'message': 'Type Not Included!'
             }, 403
-        type_schema = schema.appliances(many=False)
+        type_schema = bems_schema.appliances(many=False)
         result = type_schema.load(request.get_json(force='true'))
 
         if len(result.errors) > 0:
             return result.errors, 400
-        print(result.data)
+        
         return {
             'message': 'OK!',
         }, 200
