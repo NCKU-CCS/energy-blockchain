@@ -18,6 +18,16 @@ Example for Sending appliances data
 
 `curl http://localhost:5000/bems/appliances -X POST --data @bems_appliances.json`
 
+## Response
++ `200 OK`
+    request accept
+
++ `400 Bad Request`
+    json data error
+
++ `403 Forbidden`
+    request type not included
+
 ## Dockerize Restful Server
 + needed files:
     + Dockerfile
