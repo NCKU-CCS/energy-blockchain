@@ -8,6 +8,15 @@ Green Energy Blockchain Project cooperate with NCKU-EE
     + Bems
         + appliances
 
+## Run
+Pull from docker hub
+
+`docker pull ttw225/api_docker`
+
+Run in background
+
+`docker run -p 5000:5000 ttw225/api_docker:latest &`
+
 ## Usage
 
 curl
@@ -34,16 +43,16 @@ Example for Sending appliances data
     + requirements.txt
         + auto produce by pipenv : `pipenv lock --requirements > requirements.txt`
 ### Docker Build Command
-`docker build -t hello_docker_flask:latest .`
+`docker build -t api_docker:latest .`
 
 ### Re-Tag
-`docker tag hello_docker_flask ttw225/hello_docker_flask`
+`docker tag api_docker ttw225/api_docker`
 
 ### Docker Push Command
-`docker push ttw225/hello_docker_flask`
+`docker push ttw225/api_docker`
 
 #### update
-`docker push ttw225/hello_docker_flask:tagname`
+`docker push ttw225/api_docker:tagname`
 
 ### Docker Pull Command
-`docker pull ttw225/hello_docker_flask`
+`docker pull ttw225/api_docker`
