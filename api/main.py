@@ -6,12 +6,10 @@ from config import app
 
 api = Api(app)
 # Hems
-api.add_resource(Hems,
-                 "/hems/<string:name>")
+api.add_resource(Hems, "/hems/<string:name>")
 
 # Bems
-api.add_resource(Bems,
-                 "/bems/<string:name>")
+api.add_resource(Bems, "/bems/<string:name>")
 
 if __name__ == "__main__":
-    app.run(debug='no')
+   app.run(host=app.config['HOST'], port=app.config['PORT'], debug='no')
