@@ -3,6 +3,7 @@ from flask import request
 from models.schema.hems import hems
 from config import app
 
+
 class Hems (Resource):
     def post(self, name):
         if name not in app.config['HEMS_ACCEPT']:
@@ -17,7 +18,16 @@ class Hems (Resource):
         result = type_schema.load(request.get_json(force='true'))
 
         if len(result.errors) > 0:
-            return result.errors, 400
+            errors = result.errors.copy()
+            for error in list(errors):
+                if errors[error] == ["Missing data for required field."]:
+                    del errors[error]
+            if len(errors) > 0:
+                return errors, 400
+            else:
+                return {
+                    'message': 'Input Data Error'
+                }, 400
 
         return {
             'message': 'OK!'
