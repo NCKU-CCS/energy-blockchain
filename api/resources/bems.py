@@ -26,7 +26,7 @@ class Bems (Resource):
                 return errors, 400
             else:
                 return {
-                    'message': 'Input Data Error'
+                    'message': 'Input Data Error.'
                 }, 400
 
         return {
