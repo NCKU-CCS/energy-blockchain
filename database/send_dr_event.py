@@ -6,12 +6,7 @@ import base64
 import iota
 import numpy as np
 
-db = pymysql.connect(host='140.116.163.9',
-                     port=10002,
-                     user='dltlab',
-                     password='dltlab@nckucs',
-                     db='epslab_ems',
-                     charset='utf8')
+from config import *
 
 cursor = db.cursor(cursor=pymysql.cursors.DictCursor)
 
@@ -65,26 +60,10 @@ print(send_datas)
 
 # IOTA
 
-MySeed = b"LUEMBUSKXRNZQO9ZFLHNVCRMJD9QISVRALLJZPMKXQCMJLSYTAGZR9ILUL9NODGKHLGWHZSKJQTMP9AOF"
-# TargetAddresses = []
-# TargetAddresses.append(
-#     b"VOBLCCGXZOHUWUWTYJBZUFQBTDEOC9UZTUCORAKPAXPZLXRVWDZDKOIQHWIYXSCMKFMWYYCZBUHRWQSHX")
-targetaddress = b"VOBLCCGXZOHUWUWTYJBZUFQBTDEOC9UZTUCORAKPAXPZLXRVWDZDKOIQHWIYXSCMKFMWYYCZBUHRWQSHX"
-
 NowIs = datetime.now()  # get a actual date & time - just to have some meaningfull info
 
 # preparing transactions
 pt = []
-
-apis = []
-# apis.append('http://localhost:14267')
-apis.append('http://node.deviceproof.org:14265')
-# apis.append('https://nodes.thetangle.org:443')
-
-apis_names = []
-# apis_names.append('eb')
-apis_names.append('dlt')
-# apis_names.append('public')
 
 cost_time_all = []
 

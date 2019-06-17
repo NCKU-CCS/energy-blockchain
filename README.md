@@ -23,6 +23,12 @@ curl
 
 `curl http://localhost:5000/{ems}/{type} -X POST --data @{json_file}`
 
++ Parameters:
+
+    + ems : Type of ems. Should be `bems` or `hems`
+
+    + type : type of upload data.
+
 Example for Sending appliances data
 
 `curl http://localhost:5000/bems/appliances -X POST --data @bems_appliances.json`
