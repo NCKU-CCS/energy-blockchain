@@ -1,6 +1,6 @@
 FROM python:3.6.8
 
-COPY . /app
+COPY api/ /app
 
 WORKDIR /app
 
