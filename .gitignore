@@ -102,3 +102,18 @@ venv.bak/
 
 # mypy
 .mypy_cache/
+
+# Mac file
+.DS_Store
+
+# config file
+config.py
+
+# learning file
+learn/
+
+# temp file
+tmp/
+
+# vscode
+.vscode/
