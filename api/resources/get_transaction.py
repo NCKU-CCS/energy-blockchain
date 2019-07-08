@@ -2,6 +2,7 @@ from flask_restful import Resource
 from flask import request
 from config import app
 import iota
+import json
 
 
 class get_transaction (Resource):
@@ -16,16 +17,18 @@ class get_transaction (Resource):
         Tx = name
         try:
             data = api.get_trytes(hashes=[Tx])
+            transaction = iota.Transaction.from_tryte_string(
+                data.get('trytes')[0])
+
+            confirmed = bool(
+                list(api.get_latest_inclusion([Tx])['states'].values())[0])
+
+            message = json.loads(
+                transaction.signature_message_fragment.decode())
         except:
             return {
                 'message': 'Get from Tangle ERROR!'
             }, 403
-        transaction = iota.Transaction.from_tryte_string(data.get('trytes')[0])
-
-        confirmed = bool(
-            list(api.get_latest_inclusion([Tx])['states'].values())[0])
-
-        message = transaction.signature_message_fragment.decode()
 
         return {
             'is_confirmed': confirmed,

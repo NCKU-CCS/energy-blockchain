@@ -22,13 +22,13 @@ json_data = {
     "actual_reward": -1.0,
     "feedback_ratio": -1.0,
     "result": -1.0,
-    "inserted_at": "2019-05-03T00:00:23"
+    "inserted_at": "2019-05-03T00:00:24"
 }
 
 r = requests.post(
     'http://localhost:5000/hems/aggregator_dr_event', json=json_data)
 Tx = r.json()['Tx']
-Tx = 'J9RSSOQWFIRYBCUBXIE9JUGKDL9PMFDBVJNVUXSKBALBAVBRQVGPLKHFLLRKGFYHBGDCRPPMUNNCZ9999'
+# Tx = 'CICBZCYDEABQ9YN9ZMGNBKKQBBWNMIERSGVNVEQ9ZIKNUMODORUNNOILVXYAT9CAVODLZARGVUFR99999'
 try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 except:

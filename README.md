@@ -22,7 +22,7 @@ curl
 
     + ems : Type of ems. Should be `bems` or `hems`
 
-    + type : type of upload data.
+    + type : Type of upload data.
 
 Example for Sending DR Event:
 
@@ -69,7 +69,7 @@ Example for Sending DR Event
 ### Response
 
 + Json Type Data
-    + is_confirmed : bool : The Transaction has been confirm or not.
+    + is_confirmed : bool : The Transaction has been confirmed or not.
     + message : json : The Transaction's messages on Tangle.
     Example:
     ```json
