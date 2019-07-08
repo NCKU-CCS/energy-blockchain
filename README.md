@@ -74,8 +74,12 @@ Example for Sending DR Event
     Example:
     ```json
     {
-        "is_confirmed": true,
-        "message": "{\"eventID\": \"c14164d1a259670a0338\", \"date\": \"2019-05-03T00:00:24\", \"value\": \"ODY1Nzg0ODliNjMwMTRjYTgyMTQxZmNkOGVmMDk2OWViY2FiN2Q5ZWVjMWExZGM1YmYzY2E0ZjljMjM1MTkwNw==\"}"
+        "is_confirmed": false,
+        "message": {
+            "eventID": "c14164d1a259670a0338",
+            "date": "2019-05-03T00:00:24",
+            "value": "ODY1Nzg0ODliNjMwMTRjYTgyMTQxZmNkOGVmMDk2OWViY2FiN2Q5ZWVjMWExZGM1YmYzY2E0ZjljMjM1MTkwNw=="
+        }
     }
     ```
 
