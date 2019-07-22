@@ -6,6 +6,9 @@ import requests
 import json
 import hashlib
 import base64
+import logging
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(levelname)s : %(message)s', datefmt='%Y%m%dT%H%M%S')
 
 
 def get_data(Tx, data):
@@ -26,7 +29,7 @@ def get_data(Tx, data):
 try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 except:
-    sys.stderr.write("[ERROR] %s\n" % "Socket Create ERROR!")
+    logging.error("Socket Create ERROR!")
     sys.exit(1)
 
 sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)  # reuse tcp
@@ -36,24 +39,24 @@ sock.listen(5)
 
 while True:
     (csock, adr) = sock.accept()
-    print("\n[CLIENT] Client Info: ", adr)
+    logging.info("Client Info: %s" % str(adr))
     msg = csock.recv(1024).decode()
     msg = json.loads(msg)
     if not msg:
         pass
     else:
-        print("[CLIENT] Client send: " + json.dumps(msg))
-        print("[TxHASH]", msg["Tx"])
+        logging.info("Client send: " + json.dumps(msg))
+        logging.info("TxHASH: %s" % msg["Tx"])
         try:
             accept = get_data(str(msg["Tx"]), msg['DR_data'])
         except:
             accept = False
-            print("[ERROR] %s\n" % "get_data ERROR!")
+            logging.error("get_data ERROR!")
         if accept:
-            print("[STATUS] DR Accept.")
+            logging.info("DR Accept.")
             csock.send(("Server Receive at %s\n" %
                         datetime.datetime.now()).encode())
         else:
-            print("[STATUS] DR Reject.")
+            logging.info("DR Reject.")
             csock.send("Server Reject.\n".encode())
     csock.close()

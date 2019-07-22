@@ -1,8 +1,11 @@
 from datetime import datetime
 import iota
 import numpy as np
+import logging
 
 from config import app
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(levelname)s : %(message)s', datefmt='%Y%m%dT%H%M%S')
 
 
 def send_to_iota(send_data):
@@ -10,7 +13,7 @@ def send_to_iota(send_data):
     pt = []
 
     starttime = datetime.now()
-    print("\n[START]", starttime)
+    logging.info("START")
     pt.append(iota.ProposedTransaction(address=iota.Address(app.config['TARGETADDRESS']),  # 81 trytes long address
                                        message=iota.TryteString.from_unicode(
         send_data),
@@ -20,25 +23,24 @@ def send_to_iota(send_data):
 
     api = iota.Iota(app.config['API_URI'])
 
-    print("[INFO] Preparing/Broadcasting... Wait please...")
+    logging.info("Preparing/Broadcasting... Wait please...")
     # the whole process initiated in a single call
     FinalBundle = api.send_transfer(depth=3,
                                     transfers=pt,
                                     min_weight_magnitude=14)['bundle']  # it returns a dictionary with a bundle object
 
     # bundle is broadcasted, let's print it
-    print("[DATA]Generated bundle hash: %s" % (FinalBundle.hash))
-    print("[DATA]Tail Transaction in the Bundle is a transaction #%s." %
-          (FinalBundle.tail_transaction.current_index))
+    logging.info("Generated bundle hash: %s" % (FinalBundle.hash))
+    logging.info("Tail Transaction in the Bundle is a transaction #%s." %
+                 (FinalBundle.tail_transaction.current_index))
 
-    print("[DATA]List of all transactions in the bundle:\n")
+    logging.info("List of all transactions in the bundle:\n")
     for txn in FinalBundle:
-        print(vars(txn))
-        print("")
+        logging.info(vars(txn))
 
     endtime = datetime.now()
-    print("[FINISH]", endtime)
-    print("Cost time: %f s.\n" %
-          ((endtime - starttime).seconds+(endtime - starttime).microseconds/10**6))
+    logging.info("FINISH")
+    logging.info("Cost time: %f s.\n" %
+                 ((endtime - starttime).seconds+(endtime - starttime).microseconds/10**6))
 
     return FinalBundle.tail_transaction.hash

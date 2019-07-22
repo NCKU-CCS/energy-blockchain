@@ -3,6 +3,10 @@ import socket
 import sys
 import requests
 import json
+import logging
+logging.basicConfig(level=logging.DEBUG,
+                    format='%(asctime)s - %(levelname)s : %(message)s', datefmt='%Y%m%dT%H%M%S')
+
 
 json_data = {
     "id": 29,
@@ -32,13 +36,13 @@ Tx = r.json()['Tx']
 try:
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 except:
-    sys.stderr.write("[ERROR] %s\n" % "Socket Create ERROR!")
+    logging.error("Socket Create ERROR!")
     sys.exit(1)
 
 try:
     sock.connect(('', 54321))
 except:
-    sys.stderr.write("[ERROR] %s\n" % "Socket Connect ERROR!")
+    logging.error("Socket Connect ERROR!")
     exit(1)
 
 send_data = str(json.dumps({
@@ -47,5 +51,5 @@ send_data = str(json.dumps({
 })).encode()
 # print("Send Data:", send_data)
 sock.send(send_data)
-print("[RECV]", sock.recv(1024).decode())
+logging.info("Receve: %s" % sock.recv(1024).decode())
 sock.close()
