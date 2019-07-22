@@ -3,10 +3,7 @@ import socket
 import sys
 import requests
 import json
-import logging
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(levelname)s : %(message)s', datefmt='%Y%m%dT%H%M%S')
-
+from utils.logging import logging
 
 json_data = {
     "id": 29,

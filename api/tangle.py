@@ -1,11 +1,9 @@
 from datetime import datetime
 import iota
 import numpy as np
-import logging
+from utils.logging import logging
 
 from config import app
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(levelname)s : %(message)s', datefmt='%Y%m%dT%H%M%S')
 
 
 def send_to_iota(send_data):

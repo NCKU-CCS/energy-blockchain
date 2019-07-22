@@ -6,9 +6,7 @@ import requests
 import json
 import hashlib
 import base64
-import logging
-logging.basicConfig(level=logging.DEBUG,
-                    format='%(asctime)s - %(levelname)s : %(message)s', datefmt='%Y%m%dT%H%M%S')
+from utils.logging import logging
 
 
 def get_data(Tx, data):
