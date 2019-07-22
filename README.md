@@ -100,7 +100,7 @@ Pull from docker hub
 
 Run in background
 
-`docker run -p 5000:5000 ttw225/api_docker:latest &`
+`docker run -d --name eb_api -p 5000:5000 ttw225/api_docker:latest`
 
 # Dockerize Restful Server
 + needed files:
