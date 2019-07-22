@@ -5,7 +5,7 @@ import iota
 import json
 
 
-class get_transaction (Resource):
+class Get_transaction (Resource):
     def get(self, name):
         if len(name) != 81:
             return {
