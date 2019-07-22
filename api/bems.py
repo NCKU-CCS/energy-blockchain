@@ -4,27 +4,8 @@ import sys
 import requests
 import json
 from utils.logging import logging
-
-json_data = {
-    "id": 29,
-    "field": "NCKU",
-    "eventID": "c14164d1a259670a0338",
-    "eventdate": "2019-05-06T00:00:00",
-    "bidding_price": 1.254,
-    "bidding_capacity": 8.0,
-    "get_bidding": 1,
-    "amount": 8.0,
-    "start_at": "2019-05-06 17:00:00",
-    "end_at": "2019-05-06 17:15:00",
-    "baseline": -1.0,
-    "max_consumption": -1.0,
-    "actual_load_shedding": -1.0,
-    "expected_reward": -1.0,
-    "actual_reward": -1.0,
-    "feedback_ratio": -1.0,
-    "result": -1.0,
-    "inserted_at": "2019-05-03T00:00:24"
-}
+with open('dr.json', 'r') as f:
+    json_data = json.load(f)
 
 r = requests.post(
     'http://localhost:5000/hems/aggregator_dr_event', json=json_data)

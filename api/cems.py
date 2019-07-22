@@ -52,9 +52,9 @@ while True:
             logging.error("get_data ERROR!")
         if accept:
             logging.info("DR Accept.")
-            csock.send(("Server Receive at %s\n" %
+            csock.send(("Server Receive at %s" %
                         datetime.datetime.now()).encode())
         else:
             logging.info("DR Reject.")
-            csock.send("Server Reject.\n".encode())
+            csock.send("Server Reject.".encode())
     csock.close()
