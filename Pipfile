@@ -13,6 +13,8 @@ flask-marshmallow = "*"
 pymysql = "*"
 pyota = "*"
 numpy = "*"
+authlib = "*"
+loginpass = "*"
 
 [requires]
 python_version = "3.6"
