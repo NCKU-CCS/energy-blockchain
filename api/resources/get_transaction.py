@@ -6,15 +6,15 @@ import json
 
 
 class Get_transaction (Resource):
-    def get(self, name):
-        if len(name) != 81:
+    def get(self, tx_hash):
+        if len(tx_hash) != 81:
             return {
                 'message': 'Type Not Included!'
             }, 400
 
         api = iota.Iota(app.config['API_URI'])
 
-        Tx = name
+        Tx = tx_hash
         try:
             data = api.get_trytes(hashes=[Tx])
             transaction = iota.Transaction.from_tryte_string(
