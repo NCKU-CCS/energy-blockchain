@@ -13,7 +13,7 @@ api.add_resource(Hems, "/hems/<string:name>")
 api.add_resource(Bems, "/bems/<string:name>")
 
 # Get Transaction
-api.add_resource(Get_transaction, "/get_transaction/<string:name>")
+api.add_resource(Get_transaction, "/get_transaction/<string:tx_hash>")
 
 if __name__ == "__main__":
     app.run(host=app.config['HOST'], port=app.config['PORT'], debug='no')

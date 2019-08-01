@@ -4,11 +4,13 @@ import sys
 import requests
 import json
 from utils.logging import logging
+from config import app
+
 with open('dr.json', 'r') as f:
     json_data = json.load(f)
 
 r = requests.post(
-    'http://localhost:5000/hems/aggregator_dr_event', json=json_data)
+    app.config['API_TX'], json=json_data)
 Tx = r.json()['Tx']
 # Tx = 'CICBZCYDEABQ9YN9ZMGNBKKQBBWNMIERSGVNVEQ9ZIKNUMODORUNNOILVXYAT9CAVODLZARGVUFR99999'
 try:
