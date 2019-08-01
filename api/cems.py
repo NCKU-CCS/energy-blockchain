@@ -7,21 +7,7 @@ import json
 import hashlib
 import base64
 from utils.logging import logging
-
-
-def get_data(Tx, data):
-    r = requests.get(
-        'http://localhost:5000/get_transaction/'+Tx)
-    message = r.json()
-    json_data = json.dumps(data).encode('utf-8')
-    hash_data = hashlib.sha256(
-        json_data).hexdigest().encode()
-    base64_data = base64.b64encode(hash_data).decode()
-    if base64_data == message['message']['value']:
-        return True
-    else:
-        return False
-
+from utils.utils import verify_data
 
 # Socket
 try:
@@ -46,10 +32,10 @@ while True:
         logging.info("Client send: " + json.dumps(msg))
         logging.info("TxHASH: %s" % msg["Tx"])
         try:
-            accept = get_data(str(msg["Tx"]), msg['DR_data'])
+            accept = verify_data(str(msg["Tx"]), msg['DR_data'])
         except:
             accept = False
-            logging.error("get_data ERROR!")
+            logging.error("verify_data ERROR!")
         if accept:
             logging.info("DR Accept.")
             csock.send(("Server Receive at %s" %
