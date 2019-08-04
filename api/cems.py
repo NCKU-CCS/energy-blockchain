@@ -7,7 +7,7 @@ import json
 import hashlib
 import base64
 from utils.logging import logging
-from utils.utils import verify_data
+from resources.verify import verify_data
 
 # Socket
 try:

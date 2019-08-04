@@ -2,7 +2,7 @@ from flask import Flask
 from flask_restful import Api
 from resources.cems import Cems
 from resources.bems import Bems
-from resources.get_transaction import Get_transaction
+from utils.get_transaction import Get_transaction
 from config import app
 
 api = Api(app)
