@@ -1,6 +1,6 @@
 from flask_restful import Resource
 from flask import request
-from models.schema.hems import hems
+from models.schema.cems import cems
 from config import app
 import json
 import hashlib
@@ -8,15 +8,15 @@ import base64
 from tangle import send_to_iota
 
 
-class Hems (Resource):
+class Cems (Resource):
     def post(self, name):
-        if name not in app.config['HEMS_ACCEPT']:
+        if name not in app.config['CEMS_ACCEPT']:
             return {
                 'message': 'Type Not Included!'
             }, 403
 
         # choose Schema
-        target_schema = getattr(hems, name)
+        target_schema = getattr(cems, name)
         type_schema = target_schema(many=False)
         result = type_schema.load(request.get_json(force='true'))
 

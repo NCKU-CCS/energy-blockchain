@@ -1,13 +1,13 @@
 from flask import Flask
 from flask_restful import Api
-from resources.hems import Hems
+from resources.cems import Cems
 from resources.bems import Bems
 from resources.get_transaction import Get_transaction
 from config import app
 
 api = Api(app)
-# Hems
-api.add_resource(Hems, "/hems/<string:name>")
+# Cems
+api.add_resource(Cems, "/cems/<string:name>")
 
 # Bems
 api.add_resource(Bems, "/bems/<string:name>")

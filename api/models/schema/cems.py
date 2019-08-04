@@ -1,10 +1,10 @@
 from common.ma import ma
 from marshmallow import validate
 
-# HEMS
+# CEMS
 
 
-class hems():
+class cems():
     class aggregator_distribution(ma.Schema):
         id = ma.Int(required=True)
         field = ma.Str(required=True)
