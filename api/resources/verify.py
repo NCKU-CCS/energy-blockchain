@@ -2,8 +2,10 @@ import requests
 import json
 import hashlib
 import base64
+from config import app
+
 def verify_data(Tx, data):
-    r = requests.get('http://localhost:5000/get_transaction/'+Tx)
+    r = requests.get(app.config['API_GETTX']+Tx)
     message = r.json()
     json_data = json.dumps(data).encode('utf-8')
     hash_data = hashlib.sha256(
