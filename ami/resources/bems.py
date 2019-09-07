@@ -17,8 +17,7 @@ class Bems (Resource):
         threads = []
         for idx, field in enumerate(data):
             self.errors.append([])
-            threads.append(threading.Thread(
-                target=self.process_data, args=(idx, data[field])))
+            threads.append(threading.Thread(target=self.process_data, args=(idx, data[field])))
             threads[idx].start()
         for i in range(len(threads)):
             threads[i].join()
@@ -37,7 +36,7 @@ class Bems (Resource):
         }, 200
 
     def process_data(self, id, data):
-        pt = []
+        upload = []
 
         for name in data:
             # check table
@@ -51,17 +50,24 @@ class Bems (Resource):
 
             # check data type
             result = type_schema.load(data[name])
-
             if len(result.errors) > 0:
                 # Data Type Error
                 self.errors[id] = result.errors.copy()
                 # print(errors)
             else:
                 # encrypt
-                pt.append(self.encrypt(data[name]))
+                
+                upload_data = {
+                    "data": self.encrypt(data[name]),
+                    "date": data[name]['updated_at']
+                }
+
+                upload.append((name, upload_data))
         # send data to iota (pt)
-        print(pt)
+        print("*"*100)        
+        print(upload)
 
     def encrypt(self, data):
         # encrypt
+
         return data
