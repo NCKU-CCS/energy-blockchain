@@ -1,23 +1,42 @@
 from common.ma import ma
 from marshmallow import validate
 
-# BEMS
+
 class bems():
-    class appliances(ma.Schema):
+    class bems_homepage_information(ma.Schema):
         id = ma.Int(required=True)
         field = ma.Str(required=True)
-        name = ma.Str(required=True)
-        brand = ma.Str(required=True)
-        switch = ma.Int(required=True)
-        setting = ma.Int(required=True)
+        grid = ma.Float(required=True)
+        pv = ma.Float(required=True)
+        building = ma.Float(required=True)
+        ess = ma.Float(required=True)
+        ev = ma.Float(required=True)
+        updated_at = ma.DateTime(required=True)
+
+    class bems_ess_display(ma.Schema):
+        id = ma.Int(required=True)
+        field = ma.Str(required=True)
+        cluster = ma.Int(required=True)
+        power_display = ma.Float(required=True)
+        updated_at = ma.DateTime(required=True)
+
+    class bems_ev_display(ma.Schema):
+        id = ma.Int(required=True)
+        field = ma.Str(required=True)
+        cluster = ma.Int(required=True)
         power = ma.Float(required=True)
-        controller_address = ma.Int(required=True)
-        temperature = ma.Float(required=True)
-        humidity = ma.Float(required=True)
-        co2 = ma.Float(required=True)
-        illuminance = ma.Float(required=True)
-        dr_switch = ma.Int(required=True)
-        dr_priority = ma.Int(required=True)
-        dr_recover = ma.Int(required=True)
-        sheeding_willing = ma.Int(required=True)
-        update_time = ma.DateTime(required=True)
+        updated_at = ma.DateTime(required=True)
+
+    class bems_pv_display(ma.Schema):
+        id = ma.Int(required=True)
+        field = ma.Str(required=True)
+        cluster = ma.Int(required=True)
+        PAC = ma.Float(required=True)
+        updated_at = ma.DateTime(required=True)
+
+    class bems_wt_display(ma.Schema):
+        id = ma.Int(required=True)
+        field = ma.Str(required=True)
+        cluster = ma.Int(required=True)
+        WindGridPower = ma.Float(required=True)
+        updated_at = ma.DateTime(required=True)

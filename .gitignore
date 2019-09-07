@@ -126,3 +126,6 @@ tests/
 
 # certificate
 ami/certificate/
+
+# RSA
+ami/rsa/

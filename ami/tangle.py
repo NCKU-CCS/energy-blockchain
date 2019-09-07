@@ -2,8 +2,8 @@ from datetime import datetime
 import iota
 import numpy as np
 from utils.logging import logging
+from flask import current_app
 
-from config import app
 
 
 def send_to_iota(send_data):

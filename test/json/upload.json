@@ -1,0 +1,40 @@
+{
+    "NCKU": {
+        "bems_homepage_information": {
+            "id": 1,
+            "field": "NCKU",
+            "grid": 2.516,
+            "pv": 0.000,
+            "building": 2.466,
+            "ess": -0.050,
+            "ev": 0.000,
+            "updated_at": "2019-09-04T12:00:00"
+        },
+        "bems_ess_display": {
+            "id": 1,
+            "field": "NCKU",
+            "cluster": 1,
+            "power_display": -0.035,
+            "updated_at": "2019-09-04T12:00:00"
+        }
+    },
+    "NCKU_2": {
+        "bems_homepage_information": {
+            "id": 1,
+            "field": "NCKU_2",
+            "grid": 2.516,
+            "pv": 0.000,
+            "building": 2.466,
+            "ess": -0.050,
+            "ev": 0.000,
+            "updated_at": "2019-09-04T12:00:00"
+        },
+        "bems_ess_display": {
+            "id": 1,
+            "field": "NCKU_2",
+            "cluster": 1,
+            "power_display": -0.035,
+            "updated_at": "2019-09-04T12:00:00"
+        }
+    }
+}
