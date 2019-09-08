@@ -1,8 +1,8 @@
 {
-    "NCKU": {
+    "Carlab_BEMS": {
         "bems_homepage_information": {
             "id": 1,
-            "field": "NCKU",
+            "field": "Carlab_BEMS",
             "grid": 2.516,
             "pv": 0.000,
             "building": 2.466,
@@ -12,16 +12,16 @@
         },
         "bems_ess_display": {
             "id": 1,
-            "field": "NCKU",
+            "field": "Carlab_BEMS",
             "cluster": 1,
             "power_display": -0.035,
             "updated_at": "2019-09-04T12:00:00"
         }
     },
-    "NCKU_2": {
+    "ShaiunC2_BEMS": {
         "bems_homepage_information": {
             "id": 1,
-            "field": "NCKU_2",
+            "field": "ShaiunC2_BEMS",
             "grid": 2.516,
             "pv": 0.000,
             "building": 2.466,
@@ -31,7 +31,7 @@
         },
         "bems_ess_display": {
             "id": 1,
-            "field": "NCKU_2",
+            "field": "ShaiunC2_BEMS",
             "cluster": 1,
             "power_display": -0.035,
             "updated_at": "2019-09-04T12:00:00"

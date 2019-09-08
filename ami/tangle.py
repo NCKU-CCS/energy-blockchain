@@ -2,9 +2,9 @@ from datetime import datetime
 import iota
 import numpy as np
 from utils.logging import logging
-from flask import current_app
+from config import app
 
-
+TARGETADDRESS = b'VOBLCCGXZOHUWUWTYJBZUFQBTDEOC9UZTUCORAKPAXPZLXRVWDZDKOIQHWIYXSCMKFMWYYCZBUHRWQSHX'
 
 def send_to_iota(send_data):
     # preparing transactions
@@ -12,12 +12,13 @@ def send_to_iota(send_data):
 
     starttime = datetime.now()
     logging.info("START")
-    pt.append(iota.ProposedTransaction(address=iota.Address(app.config['TARGETADDRESS']),  # 81 trytes long address
-                                       message=iota.TryteString.from_unicode(
-        send_data),
-        # Up to 27 trytes
-        tag=iota.Tag(b'RBTC9D9DCDEAKDCDFD9DSC'),
-        value=0))
+    for tag, data in send_data:
+        pt.append(iota.ProposedTransaction(address=iota.Address(TARGETADDRESS),  # 81 trytes long address
+                                        message=iota.TryteString.from_bytes(
+            data),
+            # Up to 27 trytes
+            tag=iota.Tag(tag),
+            value=0))
 
     api = iota.Iota(app.config['API_URI'])
 

@@ -4,7 +4,11 @@ from models.schema.bems import bems
 from helpers import check_ip
 import threading
 from config import app
-
+from config import ami_cipher, ami_signer
+import json
+import base64
+from tangle import send_to_iota
+from Cryptodome.Hash import SHA256
 
 class Bems (Resource):
     @check_ip()
@@ -16,7 +20,7 @@ class Bems (Resource):
         self.errors = []
         threads = []
         for idx, field in enumerate(data):
-            self.errors.append([])
+            self.errors.append('')
             threads.append(threading.Thread(target=self.process_data, args=(idx, data[field])))
             threads[idx].start()
         for i in range(len(threads)):
@@ -57,17 +61,31 @@ class Bems (Resource):
             else:
                 # encrypt
                 
-                upload_data = {
-                    "data": self.encrypt(data[name]),
-                    "date": data[name]['updated_at']
-                }
+                upload_data = json.dumps(
+                    {
+                        "data": self.encrypt(data[name]),
+                        "signature": self.sign(data[name]),
+                        "date": data[name]['updated_at']
+                    }
+                )
 
-                upload.append((name, upload_data))
-        # send data to iota (pt)
-        print("*"*100)        
+                upload.append((self.generate_tag(name).encode(), upload_data.encode()))
+        # send data to iota
         print(upload)
+        send_to_iota(upload)
 
     def encrypt(self, data):
-        # encrypt
+        text = json.dumps(data)
+        cipher_text = base64.b64encode(ami_cipher.encrypt(text.encode()))
+        return cipher_text.decode()
+    
+    def generate_tag(self, text):
+        tag = text.upper().replace('_', '9')
+        return tag
 
-        return data
+    def sign(self, data):
+        data_hash = SHA256.new((json.dumps(data)).encode())
+
+        signature = base64.b64encode(ami_signer.sign(data_hash))
+        print(signature)
+        return signature.decode()
