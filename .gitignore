@@ -129,3 +129,4 @@ ami/certificate/
 
 # RSA
 ami/rsa/
+platform/rsa/
