@@ -69,23 +69,19 @@ class Bems (Resource):
                     }
                 )
 
-                upload.append((self.generate_tag(name).encode(), upload_data.encode()))
+                upload.append((name, upload_data.encode()))
         # send data to iota
-        print(upload)
+        # print(upload)
         send_to_iota(upload)
 
     def encrypt(self, data):
         text = json.dumps(data)
         cipher_text = base64.b64encode(ami_cipher.encrypt(text.encode()))
         return cipher_text.decode()
-    
-    def generate_tag(self, text):
-        tag = text.upper().replace('_', '9')
-        return tag
 
     def sign(self, data):
         data_hash = SHA256.new((json.dumps(data)).encode())
 
         signature = base64.b64encode(ami_signer.sign(data_hash))
-        print(signature)
+        # print(signature)
         return signature.decode()

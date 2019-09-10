@@ -4,7 +4,7 @@ import numpy as np
 from utils.logging import logging
 from config import app
 
-TARGETADDRESS = b'VOBLCCGXZOHUWUWTYJBZUFQBTDEOC9UZTUCORAKPAXPZLXRVWDZDKOIQHWIYXSCMKFMWYYCZBUHRWQSHX'
+TARGETADDRESS = b'HPKOGKEJYBU9DJACHWVSIBHBSBCNPVCOAFRPSSELCRQFCRSHVMNGWWG9AH9JOFHAOHWTFAYTMMKJJCAS9'
 
 def send_to_iota(send_data):
     # preparing transactions
@@ -17,7 +17,7 @@ def send_to_iota(send_data):
                                         message=iota.TryteString.from_bytes(
             data),
             # Up to 27 trytes
-            tag=iota.Tag(tag),
+            tag=iota.Tag(get_tag(tag).encode()),
             value=0))
 
     api = iota.Iota(app.config['API_URI'])
@@ -43,3 +43,13 @@ def send_to_iota(send_data):
                  ((endtime - starttime).seconds+(endtime - starttime).microseconds/10**6))
 
     return FinalBundle.tail_transaction.hash
+
+def get_tag(text):
+    tag = text.upper().replace('_', '9')
+    tag += '9' + chr(ord('A') + datetime.now().hour)
+    print(tag)
+    return tag
+
+def get_address():
+    # get address from platform
+    pass

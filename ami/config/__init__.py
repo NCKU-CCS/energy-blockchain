@@ -15,5 +15,5 @@ plat_rsa_pub_key = RSA.importKey(open('rsa/plat_rsa_public.pem').read())
 ami_cipher = Cipher_pkcs1_v1_5.new(plat_rsa_pub_key)
 
 # signature
-ami_rsa_pub_key = RSA.importKey(open('rsa/ami_rsa_private.pem').read())
-ami_signer = Signature_pkcs1_v1_5.new(ami_rsa_pub_key)
+ami_rsa_pri_key = RSA.importKey(open('rsa/ami_rsa_private.pem').read())
+ami_signer = Signature_pkcs1_v1_5.new(ami_rsa_pri_key)
