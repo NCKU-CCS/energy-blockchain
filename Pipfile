@@ -17,6 +17,8 @@ authlib = "*"
 loginpass = "*"
 pycryptodomex = "*"
 marshmallow = "==2.19.5"
+flask-sqlalchemy = "*"
+marshmallow-sqlalchemy = "*"
 
 [requires]
 python_version = "3.6"
