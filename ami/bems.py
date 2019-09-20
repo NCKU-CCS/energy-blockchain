@@ -1,35 +1,27 @@
-# Client
 import socket
 import sys
 import requests
 import json
-from utils.logging import logging
-from config import app
+import threading
+import time
 
-with open('dr.json', 'r') as f:
+
+API_TX = 'https://127.0.0.1:4000/bems/upload'
+
+with open('../test/json/upload.json', 'r') as f:
     json_data = json.load(f)
 
-r = requests.post(
-    app.config['API_TX'], json=json_data)
-Tx = r.json()['Tx']
-# Tx = 'CICBZCYDEABQ9YN9ZMGNBKKQBBWNMIERSGVNVEQ9ZIKNUMODORUNNOILVXYAT9CAVODLZARGVUFR99999'
-try:
-    sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-except:
-    logging.error("Socket Create ERROR!")
-    sys.exit(1)
+def req():
+    r = requests.post(API_TX, json=json_data, verify=False)
+    print(r.json())
+    print('-'*60)
 
-try:
-    sock.connect(('', 54321))
-except:
-    logging.error("Socket Connect ERROR!")
-    exit(1)
+threads = []
+for idx in range(120):
+    print(time.asctime(time.localtime(time.time())))
+    threads.append(threading.Thread(target=req))
+    threads[idx].start()
+    time.sleep(60)
 
-send_data = str(json.dumps({
-    "DR_data": json_data,
-    "Tx": Tx
-})).encode()
-# print("Send Data:", send_data)
-sock.send(send_data)
-logging.info("Receve: %s" % sock.recv(1024).decode())
-sock.close()
+
+

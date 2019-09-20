@@ -19,6 +19,7 @@ pycryptodomex = "*"
 marshmallow = "==2.19.5"
 flask-sqlalchemy = "*"
 marshmallow-sqlalchemy = "*"
+pyota-ccurl = "*"
 
 [requires]
 python_version = "3.6"

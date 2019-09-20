@@ -129,4 +129,7 @@ ami/certificate/
 
 # RSA
 ami/rsa/
-platform/rsa/
+
+# Speedtest Data
+ami/speed_test.csv
+
