@@ -1,19 +1,21 @@
-from flask import Flask
-# from Cryptodome import Random
+import os
+
+from dotenv import load_dotenv
 from Cryptodome.Cipher import PKCS1_v1_5 as Cipher_pkcs1_v1_5
 from Cryptodome.Signature import PKCS1_v1_5 as Signature_pkcs1_v1_5
 from Cryptodome.PublicKey import RSA
 
-app = Flask(__name__)
-app.config.from_pyfile('config.py')
+load_dotenv()
 
-# # random
-# random_generator = Random.new().read
+
+API_URI = os.environ.get("API_URI", "https://nodes.thetangle.org:443").split(",")
+
+API_OPEN = os.environ.get("API_OPEN", "https://nodes.thetangle.org:443")
 
 # encrypt
-plat_rsa_pub_key = RSA.importKey(open('rsa/plat_rsa_public.pem').read())
-ami_cipher = Cipher_pkcs1_v1_5.new(plat_rsa_pub_key)
+PLAT_RSA_PUB_KEY = RSA.importKey(open("rsa/plat_rsa_public.pem").read())
+AMI_CIPHER = Cipher_pkcs1_v1_5.new(PLAT_RSA_PUB_KEY)
 
 # signature
-ami_rsa_pri_key = RSA.importKey(open('rsa/ami_rsa_private.pem').read())
-ami_signer = Signature_pkcs1_v1_5.new(ami_rsa_pri_key)
+AMI_RSA_PRI_KEY = RSA.importKey(open("rsa/ami_rsa_private.pem").read())
+AMI_SIGNER = Signature_pkcs1_v1_5.new(AMI_RSA_PRI_KEY)
