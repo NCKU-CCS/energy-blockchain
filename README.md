@@ -2,6 +2,51 @@ energy-blockchain
 ===
 Green Energy Blockchain Project cooperate with NCKU-EE
 
+## Getting Started
+
+### Prerequisites
+
+- python 3.6.8
+- docker 19.03.5
+
+### Running Development
+
+Installing Packages & Running
+```
+pipenv install
+pipenv shell
+cd ami/
+pipenv run python app.py
+```
+
+### Running Production
+
+1. update the .env file
+2. run docker
+```bash
+# Default environment
+docker run --name uploader -d --net=host --restart=always uploader
+# Customized environment
+docker run --env-file .env --name uploader -d --net=host --restart=always uploader
+```
+Notice: --net is only work on Linux system
+
+### Dockerize Restful Server
++ needed files:
+    + Dockerfile
+    + requirements.txt
+        + auto produce by pipenv : `pipenv lock --requirements > requirements.txt`
+
+#### Docker Build Command
+```bash
+pipenv lock --requirements > ami/requirements.txt
+docker build -t uploader:latest ami/ --no-cache
+```
+or just use
+```bash
+make
+```
+
 ## API - Upload AMI Data
 ### Data Types
 
@@ -154,48 +199,3 @@ Example for Sending DR Event
 
     + `403 Forbidden`
         request reject by Tangle
-
-## Getting Started
-
-### Prerequisites
-
-- python 3.6.8
-- docker 19.03.5
-
-### Running Development
-
-Installing Packages & Running
-```
-pipenv install
-pipenv shell
-cd ami/
-pipenv run python app.py
-```
-
-### Running Production
-
-1. update the .env file
-2. run docker
-```bash
-# Default environment
-docker run --name uploader -d --net=host --restart=always uploader
-# Customized environment
-docker run --env-file .env --name uploader -d --net=host --restart=always uploader
-```
-Notice: --net is only work on Linux system
-
-### Dockerize Restful Server
-+ needed files:
-    + Dockerfile
-    + requirements.txt
-        + auto produce by pipenv : `pipenv lock --requirements > requirements.txt`
-
-#### Docker Build Command
-```bash
-pipenv lock --requirements > ami/requirements.txt
-docker build -t uploader:latest ami/ --no-cache
-```
-or just use
-```bash
-make
-```
