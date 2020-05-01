@@ -1,117 +1,119 @@
-from flask_restful import Resource
-from flask import request
-from models.schema.bems import bems
-from helpers import check_ip
-import threading
-from config import app
-from config import ami_cipher, ami_signer
 import json
 import base64
-from tangle import send_to_iota
-from Cryptodome.Hash import SHA256
+import threading
 
 import requests as req
-import warnings
-from urllib3.exceptions import InsecureRequestWarning
-warnings.simplefilter('ignore',InsecureRequestWarning)
+from flask import request, current_app
+from flask_restful import Resource
+from loguru import logger
+from Cryptodome.Hash import SHA256
 
-# Speed test
-from datetime import datetime
-import csv
+from config import AMI_CIPHER as ami_cipher
+from config import AMI_SIGNER as ami_signer
+from utils.tangle import Iota
+from utils.helpers import check_ip
+from models.schema.bems import bems
 
-class Bems (Resource):
+
+class Bems(Resource):
+    def __init__(self):
+        self.app = current_app
+        self.bems_accept = current_app.config["BEMS_ACCEPT"]
+        self.token = current_app.config["TOKEN"]
+        self.api_get_address = current_app.config["API_TX"]
+        self.errors = None
+
     @check_ip()
     def post(self):
-        try:
-            data = request.get_json(force='true')
-        except:
-            return 'error', 400
-        # Speed test
-        self.speed = ['','','','']
+        # if json decode error will return None
+        data = request.get_json()
+        # data = request.get_json(silent=True)
+        if not data:
+            return {"message": "JSON data error"}, 400
 
-        self.errors = []
         threads = []
+        self.errors = []
         for idx, field in enumerate(data):
-            self.errors.append('')
-            threads.append(threading.Thread(target=self.process_data, args=(idx, data[field], field)))
+            self.errors.append("")
+            threads.append(
+                threading.Thread(
+                    target=self.process_data, args=(idx, data[field], field)
+                )
+            )
             threads[idx].start()
-        for i in range(len(threads)):
-            threads[i].join()
+        for num, _ in enumerate(threads):
+            threads[num].join()
 
-        # Speed test
-        CSV_FILE = open('speed_test.csv','a')
-        CSV_WRITER = csv.writer(CSV_FILE)
-        CSV_WRITER.writerows([[datetime.now().strftime("%Y-%M-%dT%H:%m:%S"), *self.speed]])
-        CSV_FILE.close()
-        print("Cost time for each field:", self.speed)
+        if any(self.errors):
+            return {"message": self.errors}, 403
 
-        print('Error message:', self.errors)
+        return {"message": "ACCEPT"}, 200
 
-        for error in self.errors:
-            if len(error) > 0:
-                # print(errors)
-                return {
-                    'message': 'Data Error.'
-                }, 400
+    def process_data(self, idx, data, field):
+        """check data and consolidated data
 
-        return {
-            'message': 'ACCEPT',
-        }, 200
+        Arguments:
+            idx {int} -- idx of thread
+            data {dict} -- data of one field
+            field {string} -- field name
+        """
+        # check field name is correct
+        if field not in self.token:
+            self.errors[idx] = "Field Not Included!"
+            return
 
-    def process_data(self, id, data, field):
-        upload = []
-
-        for name in data:
-            # check table
-            if name not in app.config[('BEMS_ACCEPT')]:
-                self.errors[id] = 'Type Not Included!'
-                continue
+        upload_datas = []
+        # check data_table name is correct
+        for data_table in data:
+            if data_table not in self.bems_accept:
+                self.errors[idx] = "Type Not Included!"
+                return
 
             # choose Schema
-            target_schema = getattr(bems, name)
+            target_schema = getattr(bems, data_table)
             type_schema = target_schema(many=False)
 
             # check data type
-            result = type_schema.load(data[name])
-            if len(result.errors) > 0:
+            result = type_schema.load(data[data_table])
+            if result.errors:
                 # Data Type Error
-                self.errors[id] = result.errors.copy()
-                # print(errors)
-            else:
-                # encrypt
-                
-                upload_data = json.dumps(
-                    {
-                        "data": self.encrypt(data[name]),
-                        "signature": self.sign(data[name]),
-                        "date": data[name]['updated_at']
-                    }
-                )
+                self.errors[idx] = result.errors.copy()
+                return
 
-                upload.append((name, upload_data.encode()))
-        # send data to iota
-        # print(upload)
-        
-        # Original
-        # send_to_iota(id, upload, self.get_address(field))
+            # encrypt
+            upload_data = json.dumps(
+                {
+                    "id": data[data_table]["id"],
+                    "data": self.encrypt(data[data_table]),
+                    "signature": self.sign(data[data_table]),
+                }
+            )
+            upload_datas.append((data_table, upload_data.encode()))
 
-        # Speedt test
-        t = send_to_iota(id, upload, self.get_address(field))
-        self.speed[id] = t
+        iota = Iota()
+        bundle_hash, cost_time = iota.send_to_iota(
+            upload_datas, self.get_address(field)
+        )
+        logger.info(
+            f"AMI: {field}\nAMI Data: {data}\nBundle Hash: {bundle_hash}\nCost time: {cost_time}\n"
+        )
 
-    def encrypt(self, data):
+    @staticmethod
+    def encrypt(data):
+        """encrypt data"""
         text = json.dumps(data)
         cipher_text = base64.b64encode(ami_cipher.encrypt(text.encode()))
         return cipher_text.decode()
 
-    def sign(self, data):
+    @staticmethod
+    def sign(data):
+        """calculate data's signature"""
         data_hash = SHA256.new((json.dumps(data)).encode())
-
         signature = base64.b64encode(ami_signer.sign(data_hash))
-        # print(signature)
         return signature.decode()
 
     def get_address(self, field):
-        headers = {'Authorization': 'Bearer %s' % app.config['TOKEN'][field]}
-        r = req.post(app.config['API_TX'], headers=headers, verify=False)
-        return r.json()['address']
+        """get iota receiving address from platform"""
+        headers = {"Authorization": "Bearer %s" % self.token[field]}
+        response = req.get(self.api_get_address, headers=headers)
+        return response.json()["address"]
