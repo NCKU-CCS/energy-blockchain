@@ -2,52 +2,114 @@ energy-blockchain
 ===
 Green Energy Blockchain Project cooperate with NCKU-EE
 
-# API
-## Data Receive.
-Now Support:
+## API - Upload AMI Data
+### Data Types
 
-+ Hems
-    + aggregator_distribution
-    + aggregator_dr_event
-+ Bems
-    + appliances
++ Support Bems
+    + Carlab_BEMS
+    + SGESC_C_BEMS
+    + SGESC_D_BEMS
+    + ABRI_BEMS
+
++ Support Data Types
+    + bems_homepage_information(總用電)
+        |property|Type|Possible values|Description|
+        | ----- | ----- | ----- | ----- |
+        | id | string | `3d3d7ab1-3166-468f-8a70-d78cf844c1cc` | Identity of data |
+        | field | string | "NCKU" | 場域 |
+        | grid | float | 2.516 | 電網即時功率 |
+        | pv | float | 0.000 | 太陽能即時功率 |
+        | building | float | 2.466 | 大樓即時用電 |
+        | ess | float | -0.050 | 儲能即時功率 |
+        | ev | float | 0.000 | 充電樁即時功率 |
+        | updated_at | datetime | "2019-09-04T12:00:00" | %Y-%m-%dT%H:%M:%S |
+    + bems_ess_display(儲能系統)
+        |property|Type|Possible values|Description|
+        | ----- | ----- | ----- | ----- |
+        | id | string | `2a0d3a64-b813-4c39-8bbd-db4831e1d14b` | Identity of data |
+        | field | string | "NCKU" | 場域 |
+        | cluster | int | 1 | ESS編號 |
+        | power_display | float | -0.035 | 讀取實功輸出(kW)  |
+        | updated_at | datetime | "2019-09-04T12:00:00" | %Y-%m-%dT%H:%M:%S |
+    + bems_ev_display(充電樁)
+        |property|Type|Possible values|Description|
+        | ----- | ----- | ----- | ----- |
+        | id | string | `e827067a-3c41-4664-9950-c737138a32c5` | Identity of data |
+        | field | string | "NCKU" | 場域 |
+        | cluster | int | 1 | 充電柱編號 |
+        | power | float | 0.000 | 充電功率(kW) |
+        | updated_at | datetime | "2019-09-04T12:00:00" | %Y-%m-%dT%H:%M:%S |
+    + bems_pv_display(太陽光電)
+        |property|Type|Possible values|Description|
+        | ----- | ----- | ----- | ----- |
+        | id | string | `089c81a1-577b-4c09-90d8-21d3e69c1feb` | Identity of data |
+        | field | string | "NCKU" | 場域 |
+        | cluster | int | 1 | 太陽能編號 |
+        | PAC | float | 0.000 | 市電功率 |
+        | updated_at | datetime | "2019-09-04T12:00:00" | %Y-%m-%dT%H:%M:%S |
+    + bems_wt_display(中小型風力機)
+        |property|Type|Possible values|Description|
+        | ----- | ----- | ----- | ----- |
+        | id | string | `ce230f85-bddc-477d-8833-a5bf55a20254` | Identity of data |
+        | field | string | "NCKU" | 場域 |
+        | cluster | int | 1 | 風機編號 |
+        | WindGridPower | float | 0.000 | 風機功率 |
+        | updated_at | datetime | "2019-09-04T12:00:00" | %Y-%m-%dT%H:%M:%S |
 
 ### Usage
 
 curl
 
-`curl http://localhost:5000/{ems}/{type} -X POST --data @{json_file}`
+`curl http://localhost:4000/bems/upload -X POST --header 'Content-Type: application/json' --data @{json_file}`
 
-+ Parameters:
+Example for Sending AMI data:
 
-    + ems : Type of ems. Should be `bems` or `hems`
-
-    + type : Type of upload data.
-
-Example for Sending DR Event:
-
-`curl http://localhost:5000/hems/aggregator_dr_event -X POST --data @dr_event.json`
+`curl http://localhost:4000/bems/upload -X POST --header 'Content-Type: application/json' --data @upload.json`
 
 ### Response
 
 + Json Type Data
-    + Tx : string : Transaction Hash.
+    + message : string : ACCEPT or Error Message
     Example:
     ```json
     {
-        "Tx": "J9RSSOQWFIRYBCUBXIE9JUGKDL9PMFDBVJNVUXSKBALBAVBRQVGPLKHFLLRKGFYHBGDCRPPMUNNCZ9999"
+        "message": "ACCEPT"
     }
     ```
 
 + Status code
     + `200 OK`
         request accept
+        ```json
+        {
+            "message": "ACCEPT"
+        }
+        ```
 
     + `400 Bad Request`
         json data error
+        ```json
+        {
+            "message": "JSON data error"
+        }
+        ```
 
     + `403 Forbidden`
-        request type not included
+        request content not included
+        ```json
+        {
+            "message": [
+                {
+                    "ev": [
+                        "Missing data for required field."
+                    ]
+                },
+                "",
+                "",
+                ""
+            ]
+        }
+        ```
 
 
 ## Transaction Content Inquiry
@@ -93,31 +155,47 @@ Example for Sending DR Event
     + `403 Forbidden`
         request reject by Tangle
 
-# Run
-Pull from docker hub
+## Getting Started
 
-`docker pull ttw225/api_docker`
+### Prerequisites
 
-Run in background
+- python 3.6.8
+- docker 19.03.5
 
-`docker run -d --name eb_api -p 5000:5000 ttw225/api_docker:latest`
+### Running Development
 
-# Dockerize Restful Server
+Installing Packages & Running
+```
+pipenv install
+pipenv shell
+cd ami/
+pipenv run python app.py
+```
+
+### Running Production
+
+1. update the .env file
+2. run docker
+```bash
+# Default environment
+docker run --name uploader -d --net=host --restart=always uploader
+# Customized environment
+docker run --env-file .env --name uploader -d --net=host --restart=always uploader
+```
+Notice: --net is only work on Linux system
+
+### Dockerize Restful Server
 + needed files:
     + Dockerfile
     + requirements.txt
         + auto produce by pipenv : `pipenv lock --requirements > requirements.txt`
-## Docker Build Command
-`docker build -t api_docker:latest .`
 
-## Re-Tag
-`docker tag api_docker ttw225/api_docker`
-
-## Docker Push Command
-`docker push ttw225/api_docker`
-
-### update
-`docker push ttw225/api_docker:tagname`
-
-## Docker Pull Command
-`docker pull ttw225/api_docker`
+#### Docker Build Command
+```bash
+pipenv lock --requirements > ami/requirements.txt
+docker build -t uploader:latest ami/ --no-cache
+```
+or just use
+```bash
+make
+```
