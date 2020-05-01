@@ -1,0 +1,162 @@
+{
+  "Carlab_BEMS": {
+    "bems_homepage_information": {
+      "id": "fd180573-34b7-428d-860b-430875dda453",
+      "field": "Carlab_BEMS",
+      "grid": 10.048,
+      "pv": 3.683,
+      "building": 2.933,
+      "ess": 0.923,
+      "ev": 2.784,
+      "updated_at": "2020-04-30T22:33:56.270416"
+    },
+    "bems_ess_display": {
+      "id": "216e3701-aa98-4b24-980e-8e56a37341e9",
+      "field": "Carlab_BEMS",
+      "cluster": 1,
+      "power_display": 0.923,
+      "updated_at": "2020-04-30T22:33:56.270438"
+    },
+    "bems_ev_display": {
+      "id": "27cd4221-347d-4433-aee0-01c55fdf4704",
+      "field": "Carlab_BEMS",
+      "cluster": 1,
+      "power": 2.784,
+      "updated_at": "2020-04-30T22:33:56.270450"
+    },
+    "bems_pv_display": {
+      "id": "99e7121a-f707-4cc9-9c56-b075e41a0a3b",
+      "field": "Carlab_BEMS",
+      "cluster": 1,
+      "PAC": 3.683,
+      "updated_at": "2020-04-30T22:33:56.270505"
+    },
+    "bems_wt_display": {
+      "id": "c24d2677-05b6-4fab-a441-189358507b6a",
+      "field": "Carlab_BEMS",
+      "cluster": 1,
+      "WindGridPower": -2.945,
+      "updated_at": "2020-04-30T22:33:56.270561"
+    }
+  },
+  "SGESC_C_BEMS": {
+    "bems_homepage_information": {
+      "id": "221059f0-71bf-4863-a26e-34109322016b",
+      "field": "SGESC_C_BEMS",
+      "grid": -4.706,
+      "pv": -0.421,
+      "building": 1.597,
+      "ess": -1.258,
+      "ev": -4.543,
+      "updated_at": "2020-04-30T22:33:56.270592"
+    },
+    "bems_ess_display": {
+      "id": "b3ce2dd5-13fa-4b94-adbc-15c3317ac75d",
+      "field": "SGESC_C_BEMS",
+      "cluster": 1,
+      "power_display": -1.258,
+      "updated_at": "2020-04-30T22:33:56.270609"
+    },
+    "bems_ev_display": {
+      "id": "b89411c7-d6d5-4ac4-b00d-05028bb2a9bc",
+      "field": "SGESC_C_BEMS",
+      "cluster": 1,
+      "power": -4.543,
+      "updated_at": "2020-04-30T22:33:56.270643"
+    },
+    "bems_pv_display": {
+      "id": "0924f947-edb5-45b1-a9d8-1d403338b45e",
+      "field": "SGESC_C_BEMS",
+      "cluster": 1,
+      "PAC": -0.421,
+      "updated_at": "2020-04-30T22:33:56.270659"
+    },
+    "bems_wt_display": {
+      "id": "4bb63160-2d4c-4987-aefd-485e92643266",
+      "field": "SGESC_C_BEMS",
+      "cluster": 1,
+      "WindGridPower": 2.517,
+      "updated_at": "2020-04-30T22:33:56.270713"
+    }
+  },
+  "SGESC_D_BEMS": {
+    "bems_homepage_information": {
+      "id": "707d5639-3968-4db9-a3d9-d7af2ab0e588",
+      "field": "SGESC_D_BEMS",
+      "grid": 4.575,
+      "pv": 3.759,
+      "building": 1.762,
+      "ess": -2.405,
+      "ev": 0.672,
+      "updated_at": "2020-04-30T22:33:56.270765"
+    },
+    "bems_ess_display": {
+      "id": "5f350c00-e2b2-4edf-a4fe-d56c5cae4b7b",
+      "field": "SGESC_D_BEMS",
+      "cluster": 1,
+      "power_display": -2.405,
+      "updated_at": "2020-04-30T22:33:56.270783"
+    },
+    "bems_ev_display": {
+      "id": "af0b3852-3cb3-4a93-96cb-b4068ed16241",
+      "field": "SGESC_D_BEMS",
+      "cluster": 1,
+      "power": 0.672,
+      "updated_at": "2020-04-30T22:33:56.270828"
+    },
+    "bems_pv_display": {
+      "id": "9b2817af-459c-493c-89d7-20962777c3e3",
+      "field": "SGESC_D_BEMS",
+      "cluster": 1,
+      "PAC": 3.759,
+      "updated_at": "2020-04-30T22:33:56.270853"
+    },
+    "bems_wt_display": {
+      "id": "41d5c528-dd5c-451b-9b83-cd32018d128e",
+      "field": "SGESC_D_BEMS",
+      "cluster": 1,
+      "WindGridPower": 0.209,
+      "updated_at": "2020-04-30T22:33:56.270866"
+    }
+  },
+  "ABRI_BEMS": {
+    "bems_homepage_information": {
+      "id": "a48192f8-c2bd-414a-84f8-37a30cc00fc1",
+      "field": "ABRI_BEMS",
+      "grid": -4.306,
+      "pv": 1.619,
+      "building": 0.907,
+      "ess": -3.349,
+      "ev": -2.615,
+      "updated_at": "2020-04-30T22:33:56.270883"
+    },
+    "bems_ess_display": {
+      "id": "59573eac-0810-4ddf-a548-18ffa8249802",
+      "field": "ABRI_BEMS",
+      "cluster": 1,
+      "power_display": -3.349,
+      "updated_at": "2020-04-30T22:33:56.270893"
+    },
+    "bems_ev_display": {
+      "id": "98aad7b8-d61f-4411-85ff-0c2532cf1521",
+      "field": "ABRI_BEMS",
+      "cluster": 1,
+      "power": -2.615,
+      "updated_at": "2020-04-30T22:33:56.270904"
+    },
+    "bems_pv_display": {
+      "id": "b6b8b920-26c9-43c8-b5d9-facd81165701",
+      "field": "ABRI_BEMS",
+      "cluster": 1,
+      "PAC": 1.619,
+      "updated_at": "2020-04-30T22:33:56.270914"
+    },
+    "bems_wt_display": {
+      "id": "f4a64cb0-642c-4995-bfae-7fd3cc1b7b94",
+      "field": "ABRI_BEMS",
+      "cluster": 1,
+      "WindGridPower": 1.378,
+      "updated_at": "2020-04-30T22:33:56.270926"
+    }
+  }
+}
