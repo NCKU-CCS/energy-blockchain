@@ -6,8 +6,23 @@ Green Energy Blockchain Project cooperate with NCKU-EE
 
 ### Prerequisites
 
+environment
 - python 3.6.8
 - docker 19.03.5
+
+encrypt key files (put in `/ami/rsa/`)
+- plat_rsa_public.pem
+- ami_rsa_private.pem
+```
+# Generate AMI Key
+openssl genrsa -out ami_rsa_private.pem 1024
+# 使用 RSA 私鑰產生公鑰
+openssl rsa -in ami_rsa_private.pem -out ami_rsa_public.pem -outform PEM -pubout
+# Generate Platform Key
+openssl genrsa -out plat_rsa_private.pem 4096
+# 使用 RSA 私鑰產生公鑰
+openssl rsa -in plat_rsa_private.pem -out plat_rsa_public.pem -outform PEM -pubout
+```
 
 ### Running Development
 
@@ -16,7 +31,7 @@ Installing Packages & Running
 pipenv install
 pipenv shell
 cd ami/
-pipenv run python app.py
+python app.py
 ```
 
 ### Running Production
@@ -112,6 +127,12 @@ Example for Sending AMI data:
 `curl http://localhost:4000/bems/upload -X POST --header 'Content-Type: application/json' --data @upload.json`
 
 [examples](./ami/example)
++ [bash file](./ami/example/upload.sh)
+    run: `./upload.sh`
+    This example will upload [upload.json](./ami/example/upload.json)
++ [Python example](./ami/example/upload_example.py)
+    run: `python3 upload_example.py`
+    This example will generate random data and upload.
 
 ### Response
 

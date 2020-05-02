@@ -124,8 +124,8 @@ tests/
 # certificate
 ami/certificate/
 
-# RSA
-ami/rsa/
+# pem files
+*.pem
 
 # Speedtest Data
 ami/speed_test.csv
