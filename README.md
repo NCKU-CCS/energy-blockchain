@@ -111,6 +111,8 @@ Example for Sending AMI data:
 
 `curl http://localhost:4000/bems/upload -X POST --header 'Content-Type: application/json' --data @upload.json`
 
+[examples](./ami/example)
+
 ### Response
 
 + Json Type Data
@@ -155,47 +157,3 @@ Example for Sending AMI data:
             ]
         }
         ```
-
-
-## Transaction Content Inquiry
-
-### Usage
-
-curl
-
-`curl http://localhost:5000/get_transaction/{TxHash}`
-
-+ Parameters:
-
-    + TxHash : Transaction Hash. Length must be 81 characters.
-
-Example for Sending DR Event
-
-`curl http://localhost:5000/get_transaction/J9RSSOQWFIRYBCUBXIE9JUGKDL9PMFDBVJNVUXSKBALBAVBRQVGPLKHFLLRKGFYHBGDCRPPMUNNCZ9999`
-
-### Response
-
-+ Json Type Data
-    + is_confirmed : bool : The Transaction has been confirmed or not.
-    + message : json : The Transaction's messages on Tangle.
-    Example:
-    ```json
-    {
-        "is_confirmed": false,
-        "message": {
-            "eventID": "c14164d1a259670a0338",
-            "date": "2019-05-03T00:00:24",
-            "value": "ODY1Nzg0ODliNjMwMTRjYTgyMTQxZmNkOGVmMDk2OWViY2FiN2Q5ZWVjMWExZGM1YmYzY2E0ZjljMjM1MTkwNw=="
-        }
-    }
-    ```
-
-+ Status code
-    + `200 OK`
-        query accept
-
-    + `400 Bad Request`
-        Tx Hash length error
-
-    + `403 Forbidden`
-        request reject by Tangle
