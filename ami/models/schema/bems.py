@@ -1,8 +1,7 @@
 from common.ma import ma
-# from marshmallow import validate
 
 
-class bems():
+class bems:
     class bems_homepage_information(ma.Schema):
         id = ma.Str(required=True)
         field = ma.Str(required=True)
