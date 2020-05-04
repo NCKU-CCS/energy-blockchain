@@ -17,6 +17,7 @@ class Iota:
         """return usable api entry"""
         get_api = False
         for api_uri in self.api_uri:
+            logger.info(f"[URI] testing {api_uri}")
             try:
                 api_entry = iota.Iota(api_uri)
                 api_entry.get_node_info()
