@@ -10,7 +10,7 @@ environment
 - python 3.6.8
 - docker 19.03.5
 
-encrypt key files (put in `/ami/rsa/`)
+encrypt key files (put in `ami/rsa/`)
 - plat_rsa_public.pem
 - ami_rsa_private.pem
 ```
@@ -44,7 +44,7 @@ docker run --name uploader -d --net=host --restart=always uploader
 # Customized environment
 docker run --env-file .env --name uploader -d --net=host --restart=always uploader
 ```
-Notice: --net is only work on Linux system
+Notice: `--net=host` is only work on Linux system
 
 ### Dockerize Restful Server
 + needed files:
