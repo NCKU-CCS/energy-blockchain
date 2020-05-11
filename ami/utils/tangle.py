@@ -18,11 +18,13 @@ class Iota:
         get_api = False
         for api_uri in self.api_uri:
             logger.info(f"[URI] testing {api_uri}")
+            # Check if the node is available and up to date
             try:
                 api_entry = iota.Iota(api_uri)
-                api_entry.get_node_info()
-                get_api = True
-                break
+                node_info = api_entry.get_node_info()
+                if node_info["latestMilestone"] == node_info["latestSolidSubtangleMilestone"]:
+                    get_api = True
+                    break
             except requests.exceptions.ConnectionError:
                 logger.warning(f"URI {api_uri} is down.")
         if get_api is False:
