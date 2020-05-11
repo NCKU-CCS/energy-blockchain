@@ -30,12 +30,12 @@ class bems:
         id = ma.Str(required=True)
         field = ma.Str(required=True)
         cluster = ma.Int(required=True)
-        PAC = ma.Float(required=True)
+        pac = ma.Float(required=True)
         updated_at = ma.DateTime(required=True)
 
     class bems_wt_display(ma.Schema):
         id = ma.Str(required=True)
         field = ma.Str(required=True)
         cluster = ma.Int(required=True)
-        WindGridPower = ma.Float(required=True)
+        wind_grid_power = ma.Float(required=True)
         updated_at = ma.DateTime(required=True)

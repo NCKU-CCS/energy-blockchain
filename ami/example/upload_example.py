@@ -45,14 +45,14 @@ def generate_detail(field):
             "id": str(uuid.uuid4()),
             "field": field,
             "cluster": 1,
-            "PAC": pv,
+            "pac": pv,
             "updated_at": datetime.today().isoformat(),
         },
         "bems_wt_display": {
             "id": str(uuid.uuid4()),
             "field": field,
             "cluster": 1,
-            "WindGridPower": float("%.3f" % random.uniform(-5, 5)),
+            "wind_grid_power": float("%.3f" % random.uniform(-5, 5)),
             "updated_at": datetime.today().isoformat(),
         },
     }

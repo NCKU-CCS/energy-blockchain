@@ -69,8 +69,8 @@ class Iota:
                 )
             )
 
-        starttime = datetime.now()
+        start_time = datetime.now()
         final_bundle = self.api_entry.send_transfer(transfers=transactions)["bundle"]
-        endtime = datetime.now()
+        end_time = datetime.now()
 
-        return final_bundle.hash, endtime - starttime
+        return final_bundle.hash, end_time - start_time
