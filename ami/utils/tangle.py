@@ -24,6 +24,7 @@ class Iota:
                 node_info = api_entry.get_node_info()
                 if node_info["latestMilestone"] == node_info["latestSolidSubtangleMilestone"]:
                     get_api = True
+                    logger.info(f"IOTA node: {api_uri}")
                     break
             except requests.exceptions.ConnectionError:
                 logger.warning(f"URI {api_uri} is down.")
