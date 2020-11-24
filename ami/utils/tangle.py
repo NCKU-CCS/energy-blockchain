@@ -15,20 +15,29 @@ class Iota:
 
     def get_api_entry(self):
         """return usable api entry"""
-        get_api = False
-        for api_uri in self.api_uri:
-            logger.info(f"[URI] testing {api_uri}")
-            # Check if the node is available and up to date
+        available_nodes = list()
+        for node in self.api_uri:
+            logger.info(f"[CHECK NODES] Testing {node}")
             try:
-                api_entry = iota.Iota(api_uri)
-                node_info = api_entry.get_node_info()
-                if node_info["latestMilestone"] == node_info["latestSolidSubtangleMilestone"]:
-                    get_api = True
-                    logger.info(f"IOTA node: {api_uri}")
-                    break
+                api = iota.Iota(iota.HttpAdapter(node, timeout=5))
+                # Check node alive
+                node_info = api.get_node_info()
+                # Show Node Info
+                logger.debug(node_info)
+                # Check node milestone is latest
+                assert node_info["latestMilestone"] == node_info["latestSolidSubtangleMilestone"]
+                logger.success(f"[CHECK NODES] Node is alive. URI: {node}")
+                available_nodes.append(node)
+            except AssertionError:
+                logger.warning(f"[CHECK NODES] Node is not up to date. URI: {node}")
             except requests.exceptions.ConnectionError:
-                logger.warning(f"URI {api_uri} is down.")
-        if get_api is False:
+                logger.error(f"[CHECK NODES] Node is down. URI: {node}")
+            except requests.exceptions.ReadTimeout:
+                logger.error(f"[CHECK NODES] Node timeout. URI: {node}")
+        if available_nodes:
+            logger.info(f"Using IOTA Node: {available_nodes[0]}")
+            api_entry = iota.Iota(available_nodes[0])
+        else:
             logger.warning("ALL NODES DOWN\nUsing Open Nodes.")
             api_entry = iota.Iota(self.api_open)
         return api_entry
