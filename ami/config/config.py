@@ -20,6 +20,7 @@ TOKEN = {
     "SGESC_C_BEMS": os.environ.get("TOKEN_SGESC_C_BEMS"),
     "SGESC_D_BEMS": os.environ.get("TOKEN_SGESC_D_BEMS"),
     "ABRI_BEMS": os.environ.get("TOKEN_ABRI_BEMS"),
+    "NCKU_BEMS": os.environ.get("TOKEN_NCKU_BEMS"),
 }
 
 HOST = os.environ.get("HOST", "0.0.0.0")
