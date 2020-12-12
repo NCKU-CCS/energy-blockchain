@@ -16,7 +16,7 @@ BEMS_ACCEPT = [
 API_TX = os.environ.get("API_TX", "http://140.116.247.120:5000/address")
 
 TOKEN = {
-    "Carlab_BEMS": os.environ.get("TOKEN_CARLAB_BEMS"),
+    "Carlab_CEMS": os.environ.get("TOKEN_CARLAB_CEMS"),
     "SGESC_C_BEMS": os.environ.get("TOKEN_SGESC_C_BEMS"),
     "SGESC_D_BEMS": os.environ.get("TOKEN_SGESC_D_BEMS"),
     "ABRI_BEMS": os.environ.get("TOKEN_ABRI_BEMS"),
