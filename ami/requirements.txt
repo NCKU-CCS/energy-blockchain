@@ -14,7 +14,7 @@ flask==1.1.2
 idna==2.10
 immutables==0.14
 itsdangerous==1.1.0
-jinja2==2.11.2
+jinja2==2.11.3
 loguru==0.4.1
 markupsafe==1.1.1
 marshmallow-sqlalchemy==0.23.0
